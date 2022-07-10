@@ -14,7 +14,7 @@ def main(params):
 
     # Download File
     os.system("mkdir -p data/")
-    # os.system(f"wget {params.url} -O data/{filename}")
+    os.system(f"wget {params.url} -O data/{filename}")
 
     df = pd.read_parquet(f"data/{filename}")
 

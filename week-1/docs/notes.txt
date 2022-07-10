@@ -19,7 +19,7 @@ docker run -it \
   --name de-zoomcamp-pgadmin \
   dpage/pgadmin4
 
-## Run ingestion script
+# Run ingestion script
 python ingest_data.py \
   --user=root \
   --password=root \
@@ -28,3 +28,19 @@ python ingest_data.py \
   --db=ny_taxi \
   --table_name=yellow_taxi_trips \
   --url=https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-01.parquet
+
+
+# Build docker image
+docker build -t taxi_ingest:v001 .
+
+
+docker run -it \
+  --network=de-zoomcamp-pg-network \
+  taxi_ingest:v001 \
+    --user=root \
+    --password=root \
+    --host=de-zoomcamp-pg-database \
+    --port=5432 \
+    --db=ny_taxi \
+    --table_name=yellow_taxi_trips \
+    --url=http://192.168.43.61:8000/yellow_tripdata_2021-01.parquet
